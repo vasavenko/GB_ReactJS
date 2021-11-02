@@ -1,30 +1,42 @@
-import React, { useState } from 'react';
-import { Message } from './components/Message/Message';
-import './App.css';
+import React, { useCallback, useEffect, useState } from "react"
+import {Form} from "./components/Form/Form"
+import { v4 as uuidv4} from 'uuid'
+import "./App.css"
 
 function App() {
+  const [messageList, setMessageList] = useState([])
 
-  const [messageText, setmessageText] = useState('Text from props')
+  const handleSubmit = useCallback((newMessage) => {
+    setMessageList(prevMessagelist => [...prevMessagelist, newMessage])
+  }, [])
 
-  const hendleClick = () => {
-    // alert('click')
-    setmessageText("I'm from props")
-  }
+  useEffect(() => {
+    if(
+      messageList.length && 
+      messageList[messageList.length-1].author !== 'Robot'
+    ) {
+      const int = setTimeout(
+        () => 
+          handleSubmit({
+            author: 'Robot',
+            message: 'Ok',
+            id: uuidv4()
+          }),
+        500
+      )
+      return () => clearTimeout(int)
+    }
+// eslint-disable-next-line
+  }, [messageList])
+
   return (
     <div className="App">
       <header className="App-header">
-        <Message message={messageText} onMessageClick={hendleClick}/>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Form onSubmitPost={handleSubmit}/>
       </header>
+        {messageList.map((mess) => <div key={mess.id}>{mess.author} {mess.message}</div>)}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
