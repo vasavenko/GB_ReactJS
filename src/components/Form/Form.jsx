@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { v4 as uuidv4} from 'uuid'
+import { AUTORS } from "../../utils/constants"
 
 
 export const Form = ({ onSubmitPost }) => {
@@ -15,7 +16,7 @@ export const Form = ({ onSubmitPost }) => {
     onSubmitPost(
       {
         message: postText, 
-        author: 'User', 
+        author: AUTORS.human, 
         id: uuidv4()
       })
     setPostText("")
