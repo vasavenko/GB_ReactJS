@@ -3,10 +3,26 @@ import {Form} from "./components/Form/Form"
 import { v4 as uuidv4} from 'uuid'
 import { AUTORS } from "./utils/constants"
 import { MessageList } from "./components/MessageList/MessageList"
+import { ListOfChat } from "./components/ListOfChats/ListOfChats"
 import "./App.css"
 
 function App() {
   const [messageList, setMessageList] = useState([])
+// eslint-disable-next-line
+  const [ chats, setChats] = useState([
+    {
+      name: "Chat1",
+      id: uuidv4()
+    },
+    {
+      name: "Chat2",
+      id: uuidv4()
+    },
+    {
+      name: "Chat3",
+      id: uuidv4()
+    }
+  ])
 
   const handleSubmit = useCallback((newMessage) => {
     setMessageList(prevMessagelist => [...prevMessagelist, newMessage])
@@ -33,10 +49,13 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="list">
+        <ListOfChat chats={chats}/>
+      </div>
+      <div>
         <Form onSubmitPost={handleSubmit}/>
-      </header>
-      <MessageList messages={messageList} />
+        <MessageList messages={messageList} />
+      </div>
     </div>
   )
 }
