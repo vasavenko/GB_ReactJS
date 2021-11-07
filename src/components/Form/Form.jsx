@@ -10,7 +10,6 @@ export const Form = ({ onSubmitPost }) => {
   const inputRef = useRef()
 
   const [postText, setPostText] = useState("")
-  // setPostText(post)
   
   const messageChange = e => {
     setPostText(e.target.value)
