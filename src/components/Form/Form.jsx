@@ -28,9 +28,17 @@ export const Form = ({ onSubmitPost }) => {
   useEffect(() => {
     inputRef.current.focus()
   }, [])
+  
   return (
     <form onSubmit={handleSubmit}>
-      <TextField id="standard-basic" label="Message" variant="standard" value={postText} onChange={messageChange} inputRef={inputRef} />
+      <TextField 
+        id="standard-basic"
+        label="Message"
+        variant="standard"
+        value={postText}
+        onChange={messageChange}
+        inputRef={inputRef}
+      />
       <Button type='submit' variant="outlined">Send</Button>
     </form>
   )
