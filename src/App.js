@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 import { ChatList } from "./components/ChatList/ChatList";
 import Chats from "./components/Chats/chats";
 import { Home } from "./components/Home/home";
 import { Prifile } from "./components/Profile/profile";
 import { v4 as uuidv4} from 'uuid'
 import { AUTORS } from "./utils/constants"
+import { store } from "./store";
 
 
 
@@ -56,49 +58,52 @@ export const App = () => {
     const ml = Object(messageList)
     delete ml[`${idd}`]
     setMessageList((prms) => ml)
+    // setMessageList(prevMessageList => {delete prevMessageList[`${idd}`]})
 
 
   }
 
   return (
-  <BrowserRouter>
-  <ul>
-    <li>
-      <Link to='/'>Home</Link>
-    </li>
-    <li>
-      <Link to='/profile'>Profule</Link>
-    </li>
-    <li>
-      <Link to='/chats'>Chats</Link>
-    </li>
-  </ul>
+  <Provider store={store}>
+    <BrowserRouter>
+    <ul>
+      <li>
+        <Link to='/'>Home</Link>
+      </li>
+      <li>
+        <Link to='/profile'>Profule</Link>
+      </li>
+      <li>
+        <Link to='/chats'>Chats</Link>
+      </li>
+    </ul>
 
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/profile' element={<Prifile />} />
-      <Route path="chats">
-        <Route index
-          element={<ChatList 
-            chatList={chats}
-            newChat={newChat}
-            delChat={delChat}
-          />}
-        />
-        <Route 
-          path=":chatId"
-          element={
-            <Chats messageList={messageList}
-                  setMessageList={setMessageList}
-                  chatList={chats}
-                  newChat={newChat}
-                  delChat={delChat}
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/profile' element={<Prifile />} />
+        <Route path="chats">
+          <Route index
+            element={<ChatList 
+              chatList={chats}
+              newChat={newChat}
+              delChat={delChat}
+            />}
+          />
+          <Route 
+            path=":chatId"
+            element={
+              <Chats messageList={messageList}
+                    setMessageList={setMessageList}
+                    chatList={chats}
+                    newChat={newChat}
+                    delChat={delChat}
 
-            />
-          }/>
-        </Route>
-      <Route path='*' element={<h2>Not Found 404</h2>} />
-    </Routes>
-  </BrowserRouter>
+              />
+            }/>
+          </Route>
+        <Route path='*' element={<h2>Not Found 404</h2>} />
+      </Routes>
+    </BrowserRouter>
+  </Provider>
   )
 }

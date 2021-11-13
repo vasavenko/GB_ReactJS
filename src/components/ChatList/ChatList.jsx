@@ -27,7 +27,6 @@ export const ChatList = ({ chatList, newChat, delChat }) => {
   }}
 
   const deleteChat = (e) => {
-    console.log(e.target.value)
     delChat(e.target.value)
   }
 
