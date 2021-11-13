@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
@@ -10,7 +9,7 @@ export const Home = () => {
           <Link to={'/profile'}>Profile</Link>
         </li>
         <li>
-          <Link to={'/chats'}>Cats</Link>
+          <Link to={'/chats'}>Chats</Link>
         </li>
       </ul>
     </div>

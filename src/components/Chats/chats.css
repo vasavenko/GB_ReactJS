@@ -1,11 +1,14 @@
 .App {
-  /* text-align: center; */
   display: flex;
   flex-direction: row;
 }
 
 .list {
-  width: 130px;
+  width: 200px;
+}
+
+.messages {
+  margin-left: 30px;
 }
 
 .App-header {
@@ -17,8 +20,4 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 
-export const MessageList = ({ messages }) => (
+export const MessageList = ({ messages }) => {
+  return (
   <div>
     {messages.map((mes) => (
       <div key={mes.id}>
@@ -8,4 +9,5 @@ export const MessageList = ({ messages }) => (
       </div>
     ))}
   </div>
-)
+  )
+}

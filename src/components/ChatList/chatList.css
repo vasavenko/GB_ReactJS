@@ -1,0 +1,11 @@
+.chatList {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+.h3 {
+  margin: 0;
+}
+.butt {
+  width: 160px;
+}

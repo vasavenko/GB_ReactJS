@@ -1,34 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect } from "react"
 import {Form} from "../Form/Form"
 import { v4 as uuidv4} from 'uuid'
 import { AUTORS } from "../../utils/constants"
 import { MessageList } from "../MessageList/MessageList"
 import { ChatList } from "../ChatList/ChatList"
-import "./chats.css"
 import { Navigate, useParams } from "react-router"
+import "./chats.css"
 
-const iniMessage = {
-  chat1: [
-    {
-      message: '1',
-      author: AUTORS.human,
-      id: uuidv4()
-    }
-  ], 
-  chat2: [
-    {
-      message: '2',
-      author: AUTORS.human,
-      id: uuidv4()
-    }
-  ],
-  chat3: [],
-}
-
-function Chats() {
+function Chats({ messageList, setMessageList, chatList, newChat, delChat }) {
   const { chatId } = useParams()
-
-  const [messageList, setMessageList] = useState(iniMessage)
 
   const handleSubmit = useCallback(
     (newMessage) => {
@@ -36,6 +16,7 @@ function Chats() {
         ...prevMessagelist,
         [chatId]: [...prevMessagelist[chatId], newMessage],
       }))
+  // eslint-disable-next-line
   }, [chatId])
 
   useEffect(() => {
@@ -64,9 +45,9 @@ function Chats() {
   return (
     <div className="App">
       <div className="list">
-        <ChatList />
+        <ChatList chatList={chatList} newChat={newChat} delChat={delChat}/>
       </div>
-      <div>
+      <div className='messages'>
         <Form onSubmitPost={handleSubmit}/>
         <MessageList messages={messageList[chatId]} />
       </div>

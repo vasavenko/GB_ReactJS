@@ -6,11 +6,8 @@ import { AUTORS } from "../../utils/constants"
 
 
 export const Form = ({ onSubmitPost }) => {
-
   const inputRef = useRef()
-
-  const [postText, setPostText] = useState("")
-  
+  const [postText, setPostText] = useState('')
   const messageChange = e => {
     setPostText(e.target.value)
   }
