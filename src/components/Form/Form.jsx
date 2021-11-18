@@ -15,8 +15,8 @@ export const Form = ({ onSubmitPost }) => {
     e.preventDefault()
     onSubmitPost(
       {
-        message: postText, 
         author: AUTORS.human, 
+        message: postText, 
         id: uuidv4()
       })
       inputRef.current?.focus()
@@ -29,6 +29,7 @@ export const Form = ({ onSubmitPost }) => {
   return (
     <form onSubmit={handleSubmit}>
       <TextField 
+        autoComplete='off'
         id="standard-basic"
         label="Message"
         variant="standard"

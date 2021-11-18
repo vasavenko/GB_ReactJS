@@ -6,9 +6,6 @@ import ListItemText from '@mui/material/ListItemText';
 import { NavLink } from 'react-router-dom';
 import Button from '@mui/material/Button'
 import { TextField } from '@mui/material';
-// import IconButton from '@mui/material/IconButton';
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import { useParams } from "react-router"
 import "./chatList.css"
 
 
@@ -34,6 +31,7 @@ export const ChatList = ({ chatList, newChat, delChat }) => {
     <div className='chatList'>
       <h3 className='h3'>List of chats</h3>
       <TextField
+      autoComplete='off'
         value={chatName}
         id="standard-basic"
         label="New chat name"
@@ -52,10 +50,6 @@ export const ChatList = ({ chatList, newChat, delChat }) => {
                   <ListItemText primary={chat.name}/>
                 </ListItemButton>
               </NavLink>
-
-              {/* <IconButton name={chat.id} edge="end" aria-label="delete" onClick={deleteChat}>
-              <DeleteIcon/>
-              </IconButton> */}
             <Button variant="text" value={chat.id} onClick={deleteChat}>&#10006;</Button>
           </ListItem>
         ))}

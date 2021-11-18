@@ -1,70 +1,32 @@
-import React, { useState } from "react";
+import React, { useCallback} from "react";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
-import { Provider } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ChatList } from "./components/ChatList/ChatList";
 import Chats from "./components/Chats/chats";
-import { Home } from "./components/Home/home";
 import { Prifile } from "./components/Profile/profile";
 import { v4 as uuidv4} from 'uuid'
-import { AUTORS } from "./utils/constants"
-import { store } from "./store";
-
-
+import { addChatToList, deleteChatFromList } from "./store/chatList/action";
+import { Home } from "./components/Home/home";
+import { addChatToChats, deleteChatFromChats } from "./store/chats/action";
+import { selectChatList } from "./store/chatList/salectors";
 
 export const App = () => {
 
-  const iniMessage = {
-    chat1: [
-      {
-        message: '1',
-        author: AUTORS.human,
-        id: uuidv4()
-      }
-    ], 
-    chat2: [
-      {
-        message: '2',
-        author: AUTORS.human,
-        id: uuidv4()
-      }
-    ],
-    chat3: [],
-  }
-  const iniChatList = [
-    {
-      name: "chat1",
-      id: 'chat1'
-    },
-    {
-      name: "chat2",
-      id: 'chat2'
-    },
-    {
-      name: "chat3",
-      id: 'chat3'
-    }
-  ]
-  
-  const [messageList, setMessageList] = useState(iniMessage)
-  const [chats, setChats] = useState(iniChatList)
+  const chats = useSelector(selectChatList)
+  const dispatch = useDispatch()
 
-  const newChat= (name) => {
+  const newChat= useCallback((name) => {
     const newChat = {name: name, id: uuidv4()}
-    setChats(pervChats => [...pervChats, newChat])
-    setMessageList((prevMessageList) => ({...prevMessageList, [newChat.id]:[] }))
-  }
-  const delChat = (idd) => {
-    setChats((prevChats) => prevChats.filter(item => item.id !== idd))
-    const ml = Object(messageList)
-    delete ml[`${idd}`]
-    setMessageList((prms) => ml)
-    // setMessageList(prevMessageList => {delete prevMessageList[`${idd}`]})
+    dispatch(addChatToList(newChat))
+    dispatch(addChatToChats(newChat.id))
+  }, [dispatch])
 
-
-  }
+  const delChat = useCallback((idd) => {
+    dispatch(deleteChatFromList(idd))
+    dispatch(deleteChatFromChats(idd))
+  },[dispatch])
 
   return (
-  <Provider store={store}>
     <BrowserRouter>
     <ul>
       <li>
@@ -83,7 +45,8 @@ export const App = () => {
         <Route path='/profile' element={<Prifile />} />
         <Route path="chats">
           <Route index
-            element={<ChatList 
+            element={
+            <ChatList 
               chatList={chats}
               newChat={newChat}
               delChat={delChat}
@@ -91,12 +54,11 @@ export const App = () => {
           />
           <Route 
             path=":chatId"
-            element={
-              <Chats messageList={messageList}
-                    setMessageList={setMessageList}
-                    chatList={chats}
-                    newChat={newChat}
-                    delChat={delChat}
+              element={
+                <Chats 
+                  chatList={chats}
+                  newChat={newChat}
+                  delChat={delChat}
 
               />
             }/>
@@ -104,6 +66,5 @@ export const App = () => {
         <Route path='*' element={<h2>Not Found 404</h2>} />
       </Routes>
     </BrowserRouter>
-  </Provider>
   )
 }

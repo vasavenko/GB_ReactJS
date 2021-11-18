@@ -6,18 +6,19 @@ import { MessageList } from "../MessageList/MessageList"
 import { ChatList } from "../ChatList/ChatList"
 import { Navigate, useParams } from "react-router"
 import "./chats.css"
+import { useDispatch, useSelector } from "react-redux"
+import { addMessage } from "../../store/chats/action"
+import { selectChats } from "../../store/chats/selectors"
 
-function Chats({ messageList, setMessageList, chatList, newChat, delChat }) {
+function Chats({ setMessageList, chatList, newChat, delChat }) {
   const { chatId } = useParams()
+  const messageList = useSelector(selectChats)
+  const dispatch = useDispatch()
 
   const handleSubmit = useCallback(
     (newMessage) => {
-      setMessageList((prevMessagelist) => ({
-        ...prevMessagelist,
-        [chatId]: [...prevMessagelist[chatId], newMessage],
-      }))
-  // eslint-disable-next-line
-  }, [chatId])
+      dispatch(addMessage(chatId, newMessage))
+  }, [chatId, dispatch])
 
   useEffect(() => {
     if(
