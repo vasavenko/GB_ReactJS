@@ -5,13 +5,14 @@ import { AUTORS } from "../../utils/constants"
 import { MessageList } from "../MessageList/MessageList"
 import { ChatList } from "../ChatList/ChatList"
 import { Navigate, useParams } from "react-router"
-import "./chats.css"
 import { useDispatch, useSelector } from "react-redux"
-import { addMessage } from "../../store/chats/action"
+import { addMessage, deleteMessage } from "../../store/chats/action"
 import { selectChats } from "../../store/chats/selectors"
+import "./chats.css"
 
-function Chats({ setMessageList, chatList, newChat, delChat }) {
+function Chats() {
   const { chatId } = useParams()
+  
   const messageList = useSelector(selectChats)
   const dispatch = useDispatch()
 
@@ -39,6 +40,10 @@ function Chats({ setMessageList, chatList, newChat, delChat }) {
 // eslint-disable-next-line
   }, [messageList])
 
+  const dellMess = (idMes) => {
+    dispatch(deleteMessage(chatId, idMes))
+  }
+
   if (!messageList[chatId]) {
     return <Navigate replace to='/chats' />
   }
@@ -46,11 +51,11 @@ function Chats({ setMessageList, chatList, newChat, delChat }) {
   return (
     <div className="App">
       <div className="list">
-        <ChatList chatList={chatList} newChat={newChat} delChat={delChat}/>
+        <ChatList />
       </div>
       <div className='messages'>
         <Form onSubmitPost={handleSubmit}/>
-        <MessageList messages={messageList[chatId]} />
+        <MessageList messages={messageList[chatId]} delMess={dellMess}/>
       </div>
     </div>
   )
