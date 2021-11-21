@@ -8,13 +8,12 @@ import Button from '@mui/material/Button'
 import { TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectChatList } from '../../store/chatList/salectors';
-import { addChatToList, deleteChatFromList } from '../../store/chatList/action';
-import { addChatToChats, deleteChatFromChats } from '../../store/chats/action';
+import { addChat, delChat } from '../../store/chatList/action';
 import { v4 as uuidv4} from 'uuid'
 import "./chatList.css"
 
 export const ChatList = () => {
-  const chats = useSelector(selectChatList)
+  const chatList = useSelector(selectChatList)
   const dispatch = useDispatch()
 
   const [chatName, setChatName] = useState('')
@@ -25,14 +24,12 @@ export const ChatList = () => {
 
   const addNewChat = () => {
     const newChat = {name: chatName, id: uuidv4()}
-    dispatch(addChatToList(newChat))
-    dispatch(addChatToChats(newChat.id))
+    dispatch(addChat(newChat))
     setChatName('')
   }
 
   const deleteChat = useCallback((e) => {
-    dispatch(deleteChatFromList(e.target.value))
-    dispatch(deleteChatFromChats(e.target.value))
+    dispatch(delChat(e.target.value))
   },[dispatch])
 
   return (
@@ -48,7 +45,7 @@ export const ChatList = () => {
       />
       <Button variant="outlined" onClick={addNewChat}>Add chat</Button>
       <List>
-        {chats.map((chat) => (
+        {chatList.map((chat) => (
           <ListItem key={chat.id} disablePadding>
               <NavLink 
                 style={({ isActive }) => ({ color: isActive ? "red" : "blue"})}

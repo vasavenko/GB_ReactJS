@@ -2,7 +2,7 @@ import { TextField } from '@mui/material'
 import Button from '@mui/material/Button'
 import React, { useEffect, useRef, useState } from "react"
 import { v4 as uuidv4} from 'uuid'
-import { AUTORS } from "../../utils/constants"
+import { AUTHORS } from "../../utils/constants"
 
 
 export const Form = ({ onSubmitPost }) => {
@@ -15,7 +15,7 @@ export const Form = ({ onSubmitPost }) => {
     e.preventDefault()
     onSubmitPost(
       {
-        author: AUTORS.human, 
+        author: AUTHORS.human, 
         message: postText, 
         id: uuidv4()
       })

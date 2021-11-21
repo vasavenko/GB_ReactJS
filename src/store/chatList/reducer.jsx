@@ -1,16 +1,13 @@
-import { ADD_CHAT_TO_LIST, DELETE_CHAT_FROM_LIST } from "./action"
+import { ADD_CHAT, DELETE_CHAT } from "./action"
 
 const iniChatList = []
 
 export const chatListReduser = (state = iniChatList, { type, payload }) => {
   switch (type) {
-
-    case ADD_CHAT_TO_LIST:
+    case ADD_CHAT:
       return [...state, payload]
-
-    case DELETE_CHAT_FROM_LIST:
+    case DELETE_CHAT:
       return state.filter(({ id }) => id !== payload) 
-
     default:
       return state
   }
