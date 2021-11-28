@@ -6,20 +6,23 @@ import thunk from 'redux-thunk'
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
+import { postsReducer } from "./posts/reduser";
 
 const composeEnhansers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const config = {
   key: 'gbMsngr',
   storage,
-  blacklist: ['profile'],
+  blacklist: ['profile', 'posts'],
 }
 
-const persistedReducer = persistReducer(config,
+const persistedReducer = persistReducer(
+  config,
   combineReducers({
     profile: profileReducer,
     chatList: chatListReduser,
-    chats: chatsReduser
+    chats: chatsReduser,
+    posts: postsReducer
 }))
 
 export const store = createStore(
