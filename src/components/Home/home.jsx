@@ -11,6 +11,9 @@ export const Home = () => {
         <li>
           <Link to={'/chats'}>Chats</Link>
         </li>
+        <li>
+          <Link to={'/Posts'}>Posts</Link>
+        </li>
       </ul>
     </div>
   )
